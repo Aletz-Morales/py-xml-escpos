@@ -19,7 +19,7 @@ test_temp = """
     </receipt>
 """
 from xmlescpos.exceptions import *
-from xmlescpos.printer import Usb, Network
+from xmlescpos.printer import Usb, Network, Dummy
 import usb
 import pprint
 import sys
@@ -31,9 +31,11 @@ while i:
     i -= 1
     try:
         # printer = Usb(0x04b8, 0x0e03)
-        printer = Network('169.254.178.76')
+        # printer = Network('169.254.178.76')
+        printer = Dummy()
         printer.receipt(test_temp)
-        pp.pprint(printer.get_printer_status())
+        # pp.pprint(printer.get_printer_status())
+        pp.pprint(printer.getTxTEscPos())
     except NoDeviceError as e:
         print "No device found %s" % str(e)
     except HandleDeviceError as e:
